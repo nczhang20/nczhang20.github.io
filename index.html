@@ -3,316 +3,564 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Nick — Portfolio</title>
+  <title>Nick Zhang — Portfolio</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Outfit:wght@300;400;500&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --bg: #ffffff;
-      --bg-secondary: #f7f6f3;
-      --text-primary: #1a1a18;
-      --text-secondary: #5c5b57;
-      --text-tertiary: #9b9a96;
-      --border-light: rgba(0,0,0,0.10);
-      --border-mid: rgba(0,0,0,0.18);
-      --border-strong: rgba(0,0,0,0.28);
-      --radius-md: 8px;
-      --radius-lg: 12px;
+      --bg: #0e0e0c;
+      --bg2: #151513;
+      --bg3: #1c1c19;
+      --gold: #c9a96e;
+      --gold-dim: #8a6f42;
+      --text: #f0ede4;
+      --text-mid: #a09d94;
+      --text-dim: #5c5a54;
+      --border: rgba(255,255,255,0.07);
+      --border-mid: rgba(255,255,255,0.12);
+      --radius: 4px;
+      --radius-lg: 8px;
     }
 
-    @media (prefers-color-scheme: dark) {
-      :root {
-        --bg: #1a1a18;
-        --bg-secondary: #242422;
-        --text-primary: #f0efe9;
-        --text-secondary: #a8a79f;
-        --text-tertiary: #6b6a64;
-        --border-light: rgba(255,255,255,0.08);
-        --border-mid: rgba(255,255,255,0.14);
-        --border-strong: rgba(255,255,255,0.22);
-      }
-    }
-
-    html { background: var(--bg); color: var(--text-primary); }
+    html { background: var(--bg); color: var(--text); scroll-behavior: smooth; }
 
     body {
-      font-family: 'DM Sans', sans-serif;
-      background: var(--bg);
-      color: var(--text-primary);
-      min-height: 100vh;
-    }
-
-    .portfolio-root {
-      max-width: 860px;
-      margin: 0 auto;
-      padding: 3rem 1.5rem 5rem;
-    }
-
-    .hero {
-      display: grid;
-      grid-template-columns: 1fr 200px;
-      gap: 3rem;
-      align-items: center;
-      padding-bottom: 2.5rem;
-      border-bottom: 0.5px solid var(--border-light);
-      margin-bottom: 2.5rem;
-    }
-
-    .hero-title {
-      font-size: 13px;
+      font-family: 'Outfit', sans-serif;
       font-weight: 300;
-      color: var(--text-tertiary);
-      letter-spacing: 0.13em;
+      background: var(--bg);
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── NOISE TEXTURE OVERLAY ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 1000;
+      opacity: 0.35;
+    }
+
+    /* ── LAYOUT ── */
+    .wrap {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 2.5rem;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 1.5rem 2.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: linear-gradient(to bottom, rgba(14,14,12,0.95) 0%, transparent 100%);
+      backdrop-filter: blur(2px);
+    }
+
+    .nav-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 20px;
+      font-weight: 400;
+      letter-spacing: 0.06em;
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 12px;
+      font-weight: 400;
+      letter-spacing: 0.12em;
       text-transform: uppercase;
-      margin-bottom: 0.6rem;
+      color: var(--text-mid);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--gold); }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 420px;
+      gap: 0;
+      align-items: stretch;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .hero-left {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 8rem 4rem 5rem 2.5rem;
+      border-right: 1px solid var(--border);
+    }
+
+    .hero-eyebrow {
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1.5rem;
+      opacity: 0;
+      animation: fadeUp 0.8s ease forwards 0.2s;
     }
 
     .hero-name {
-      font-family: 'DM Serif Display', serif;
-      font-size: 52px;
-      font-weight: 400;
-      line-height: 1.05;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(64px, 8vw, 110px);
+      font-weight: 300;
+      line-height: 0.92;
       letter-spacing: -0.02em;
-      margin-bottom: 1.25rem;
+      color: var(--text);
+      margin-bottom: 2.5rem;
+      opacity: 0;
+      animation: fadeUp 0.8s ease forwards 0.4s;
+    }
+
+    .hero-name em {
+      font-style: italic;
+      color: var(--text-mid);
     }
 
     .hero-bio {
       font-size: 15px;
-      line-height: 1.8;
-      color: var(--text-secondary);
-      max-width: 540px;
+      line-height: 1.85;
+      color: var(--text-mid);
+      max-width: 500px;
+      opacity: 0;
+      animation: fadeUp 0.8s ease forwards 0.6s;
     }
 
-    .photo-wrap img {
-      width: 200px;
-      height: 200px;
+    .hero-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 2rem;
+      opacity: 0;
+      animation: fadeUp 0.8s ease forwards 0.8s;
+    }
+
+    .tag {
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      border: 1px solid var(--border-mid);
+      padding: 5px 12px;
+      border-radius: 99px;
+    }
+
+    .hero-right {
+      position: relative;
+      overflow: hidden;
+      background: var(--bg2);
+    }
+
+    .hero-photo {
+      width: 100%;
+      height: 100%;
       object-fit: cover;
       object-position: center top;
-      border-radius: var(--radius-lg);
       display: block;
+      filter: grayscale(20%) contrast(1.05);
+      opacity: 0;
+      animation: fadeIn 1.2s ease forwards 0.3s;
     }
 
-    .section-label {
-      font-size: 11px;
-      font-weight: 500;
-      letter-spacing: 0.14em;
+    .hero-photo-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to right, rgba(14,14,12,0.4) 0%, transparent 40%),
+                  linear-gradient(to top, rgba(14,14,12,0.6) 0%, transparent 35%);
+    }
+
+    .hero-photo-label {
+      position: absolute;
+      bottom: 2rem;
+      right: 2rem;
+      font-size: 10px;
+      letter-spacing: 0.18em;
       text-transform: uppercase;
-      color: var(--text-tertiary);
-      margin-bottom: 1.25rem;
+      color: var(--text-dim);
+      writing-mode: vertical-rl;
+      text-orientation: mixed;
+    }
+
+    /* ── DIVIDER ── */
+    .section-divider {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      padding: 4rem 0 2.5rem;
+    }
+
+    .section-divider-line {
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    .section-divider-label {
+      font-size: 10px;
+      font-weight: 400;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      white-space: nowrap;
+    }
+
+    /* ── PROJECTS ── */
+    .projects-section {
+      padding-bottom: 6rem;
+    }
+
+    .projects-intro {
+      font-size: 14px;
+      line-height: 1.8;
+      color: var(--text-dim);
+      max-width: 580px;
+      margin-bottom: 3rem;
+      padding-left: 1px;
+      border-left: 2px solid var(--gold-dim);
+      padding-left: 1rem;
     }
 
     .projects-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-      gap: 1rem;
+      grid-template-columns: repeat(3, 1fr);
+      border-top: 1px solid var(--border);
+      border-left: 1px solid var(--border);
     }
 
     .project-card {
-      background: var(--bg);
-      border: 0.5px solid var(--border-light);
-      border-radius: var(--radius-lg);
-      padding: 1.25rem;
+      border-right: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 2rem 1.75rem;
       display: flex;
       flex-direction: column;
-      gap: 10px;
-      transition: border-color 0.15s;
+      gap: 1rem;
+      position: relative;
+      transition: background 0.25s;
+      text-decoration: none;
+      color: inherit;
+      cursor: default;
     }
 
-    .project-card:hover { border-color: var(--border-strong); }
+    .project-card.has-link { cursor: pointer; }
 
-    .project-card-top {
+    .project-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: var(--gold);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.3s ease;
+    }
+
+    .project-card.has-link:hover { background: var(--bg2); }
+    .project-card.has-link:hover::before { transform: scaleX(1); }
+
+    .project-meta {
       display: flex;
-      align-items: flex-start;
       justify-content: space-between;
-      gap: 8px;
-    }
-
-    .project-icon {
-      width: 36px;
-      height: 36px;
-      border-radius: var(--radius-md);
-      display: flex;
       align-items: center;
-      justify-content: center;
-      font-size: 18px;
-      flex-shrink: 0;
     }
 
     .project-year {
       font-size: 11px;
-      color: var(--text-tertiary);
-      font-weight: 300;
-      padding-top: 3px;
+      letter-spacing: 0.12em;
+      color: var(--gold-dim);
+    }
+
+    .project-status {
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      border: 1px solid var(--border-mid);
+      padding: 2px 8px;
+      border-radius: 99px;
     }
 
     .project-name {
-      font-family: 'DM Serif Display', serif;
-      font-size: 18px;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 28px;
       font-weight: 400;
-      line-height: 1.2;
+      line-height: 1.1;
+      letter-spacing: -0.01em;
+      color: var(--text);
+    }
+
+    .project-domain {
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--gold-dim);
     }
 
     .project-desc {
-      font-size: 13px;
-      line-height: 1.65;
-      color: var(--text-secondary);
+      font-size: 13.5px;
+      line-height: 1.7;
+      color: var(--text-mid);
       flex: 1;
     }
 
-    .project-badge {
-      font-size: 11px;
-      padding: 3px 9px;
-      border-radius: 99px;
-      font-weight: 400;
-      width: fit-content;
-      background: var(--bg-secondary);
-      color: var(--text-tertiary);
-      border: 0.5px solid var(--border-light);
-    }
-
-    .project-link {
-      display: inline-flex;
+    .project-link-row {
+      display: flex;
       align-items: center;
-      gap: 5px;
+      gap: 6px;
       font-size: 12px;
-      font-weight: 500;
-      color: var(--text-secondary);
+      font-weight: 400;
+      letter-spacing: 0.08em;
+      color: var(--text-dim);
       text-decoration: none;
-      border: 0.5px solid var(--border-mid);
-      padding: 5px 11px;
-      border-radius: 99px;
-      width: fit-content;
-      transition: border-color 0.15s, color 0.15s;
-      cursor: default;
+      transition: color 0.2s;
+      margin-top: auto;
+      padding-top: 0.5rem;
+      border-top: 1px solid var(--border);
     }
 
-    a.project-link { cursor: pointer; }
-    a.project-link:hover { color: var(--text-primary); border-color: var(--border-strong); }
+    .project-card.has-link:hover .project-link-row { color: var(--gold); }
 
-    .project-link.disabled {
-      opacity: 0.45;
-      pointer-events: none;
+    .project-link-row .arrow {
+      font-size: 16px;
+      transition: transform 0.2s;
     }
 
-    .note-strip {
-      margin-top: 2rem;
-      padding: 1rem 1.25rem;
-      border-left: 2px solid var(--border-mid);
+    .project-card.has-link:hover .project-link-row .arrow { transform: translate(3px, -3px); }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2.5rem 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .footer-note {
+      font-size: 12px;
+      color: var(--text-dim);
+      letter-spacing: 0.06em;
+      max-width: 480px;
+      line-height: 1.7;
+    }
+
+    .footer-name {
+      font-family: 'Cormorant Garamond', serif;
       font-size: 13px;
-      line-height: 1.75;
-      color: var(--text-secondary);
+      color: var(--text-dim);
+      letter-spacing: 0.1em;
+    }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(16px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      .hero {
+        grid-template-columns: 1fr;
+        min-height: auto;
+      }
+      .hero-right {
+        height: 55vw;
+        max-height: 400px;
+      }
+      .hero-left {
+        padding: 7rem 1.5rem 3rem;
+        border-right: none;
+        border-bottom: 1px solid var(--border);
+      }
+      .projects-grid { grid-template-columns: repeat(2, 1fr); }
+      nav { padding: 1.25rem 1.5rem; }
+      .wrap { padding: 0 1.5rem; }
     }
 
     @media (max-width: 600px) {
-      .hero {
-        grid-template-columns: 1fr;
-        gap: 1.5rem;
-      }
-      .photo-wrap {
-        display: flex;
-        justify-content: center;
-        order: -1;
-      }
-      .hero-name { font-size: 38px; }
+      .projects-grid { grid-template-columns: 1fr; }
+      .hero-name { font-size: 56px; }
+      .nav-links { display: none; }
+      footer { flex-direction: column; gap: 1rem; align-items: flex-start; }
     }
   </style>
 </head>
 <body>
 
-<div class="portfolio-root">
+  <nav>
+    <a href="#" class="nav-logo">N.</a>
+    <ul class="nav-links">
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="mailto:">Contact</a></li>
+    </ul>
+  </nav>
 
   <div class="hero">
-    <div>
-      <p class="hero-title">Strategy · Sustainable Finance · AI</p>
-      <h1 class="hero-name">Nick</h1>
+    <div class="hero-left">
+      <p class="hero-eyebrow">Impact · Finance · Technology</p>
+      <h1 class="hero-name">Nick<br><em>Zhang</em></h1>
       <p class="hero-bio">
-        I work at the intersection of impact investing, sustainable finance, and emerging technology, with over 15 years of experience across transaction consulting, blended finance, and fundraising for high-impact organisations. Alongside this, I build AI-powered tools and prototypes: partly to solve real professional pain points, partly out of curiosity. The projects below reflect my ability to work with AI and advise on its practical deployment.
+        I work at the intersection of impact investing, sustainable finance, and emerging technology, with over 15 years of experience across transaction consulting, blended finance, and fundraising for high-impact organisations. Alongside this, I build AI-powered tools and prototypes: partly to solve real professional pain points, partly out of curiosity.
       </p>
+      <div class="hero-tags">
+        <span class="tag">Blended Finance</span>
+        <span class="tag">Natural Capital</span>
+        <span class="tag">AI Strategy</span>
+        <span class="tag">London</span>
+      </div>
     </div>
-    <div class="photo-wrap">
-      <img src="./photo.jpg" alt="Nick, professional headshot" />
+    <div class="hero-right">
+      <img class="hero-photo" src="./photo.jpg" alt="Nick Zhang" />
+      <div class="hero-photo-overlay"></div>
+      <span class="hero-photo-label">Nick Zhang</span>
     </div>
   </div>
 
-  <p class="section-label">Selected projects</p>
+  <div class="wrap">
 
-  <div class="projects-grid">
-
-    <div class="project-card">
-      <div class="project-card-top">
-        <div class="project-icon" style="background:#EAF3DE;">🎯</div>
-        <span class="project-year">2024</span>
-      </div>
-      <p class="project-name">Career Mentor</p>
-      <p class="project-desc">An AI career coach for impact investing. Maps viable pathways to target roles based on the actual trajectories of people already in them.</p>
-      <span class="project-badge">Impact investing</span>
-      <a class="project-link" href="https://careermentor.onrender.com/" target="_blank" rel="noopener">
-        ↗ Visit (pw: Impactful)
-      </a>
+    <div class="section-divider reveal" id="projects">
+      <div class="section-divider-line"></div>
+      <span class="section-divider-label">Selected projects</span>
+      <div class="section-divider-line"></div>
     </div>
 
-    <div class="project-card">
-      <div class="project-card-top">
-        <div class="project-icon" style="background:#E6F1FB;">📊</div>
-        <span class="project-year">2026</span>
-      </div>
-      <p class="project-name">Registra</p>
-      <p class="project-desc">Bulk iXBRL financial data extraction from Companies House. Multiple companies and years in a single structured Excel export.</p>
-      <span class="project-badge">Finance · Data</span>
-      <a class="project-link" href="https://registra.up.railway.app/" target="_blank" rel="noopener">
-        ↗ Visit
-      </a>
+    <div class="projects-intro reveal">
+      These projects demonstrate applied AI capability: designing systems, prompting intelligently, and shipping working tools. They are not startup pitches — they are evidence of how I think about AI deployment and strategy.
     </div>
 
-    <div class="project-card">
-      <div class="project-card-top">
-        <div class="project-icon" style="background:#FAEEDA;">🏘️</div>
-        <span class="project-year">2026</span>
+    <div class="projects-section">
+      <div class="projects-grid">
+
+        <a class="project-card has-link" href="https://careermentor.onrender.com/" target="_blank" rel="noopener">
+          <div class="project-meta">
+            <span class="project-year">2024</span>
+            <span class="project-status">Live</span>
+          </div>
+          <p class="project-name">Career Mentor</p>
+          <p class="project-domain">Impact Investing</p>
+          <p class="project-desc">An AI career coach mapping viable pathways to target roles, based on the actual trajectories of people already in them.</p>
+          <div class="project-link-row">
+            <span>Visit site</span>
+            <span class="arrow">↗</span>
+            <span style="font-size:11px; color: var(--text-dim); margin-left:auto;">(pw: Impactful)</span>
+          </div>
+        </a>
+
+        <a class="project-card has-link" href="https://registra.up.railway.app/" target="_blank" rel="noopener">
+          <div class="project-meta">
+            <span class="project-year">2026</span>
+            <span class="project-status">Live</span>
+          </div>
+          <p class="project-name">Registra</p>
+          <p class="project-domain">Finance · Data</p>
+          <p class="project-desc">Bulk iXBRL financial data extraction from Companies House. Multiple companies and multiple years in a single structured Excel export.</p>
+          <div class="project-link-row">
+            <span>Visit site</span>
+            <span class="arrow">↗</span>
+          </div>
+        </a>
+
+        <a class="project-card has-link" href="https://joinresonance.co.uk/" target="_blank" rel="noopener">
+          <div class="project-meta">
+            <span class="project-year">2026</span>
+            <span class="project-status">Live</span>
+          </div>
+          <p class="project-name">Resonance</p>
+          <p class="project-domain">Community · Platform</p>
+          <p class="project-desc">A local service demand aggregation platform. Crystallises latent neighbourhood demand so that viable local services can get off the ground.</p>
+          <div class="project-link-row">
+            <span>Visit site</span>
+            <span class="arrow">↗</span>
+          </div>
+        </a>
+
+        <div class="project-card">
+          <div class="project-meta">
+            <span class="project-year">2026</span>
+            <span class="project-status">In testing</span>
+          </div>
+          <p class="project-name">BoulderBuddy</p>
+          <p class="project-domain">Sport · Mobile</p>
+          <p class="project-desc">AI bouldering form analysis via video. Assesses technique and compares against reference climbers. iOS and Android app currently in testing.</p>
+          <div class="project-link-row">
+            <span>App store soon</span>
+          </div>
+        </div>
+
+        <div class="project-card">
+          <div class="project-meta">
+            <span class="project-year">2026</span>
+            <span class="project-status">In development</span>
+          </div>
+          <p class="project-name">Kin</p>
+          <p class="project-domain">Family · Mobile</p>
+          <p class="project-desc">An asynchronous family moments platform for staying connected across generations, with gentle health monitoring features for grandparents.</p>
+          <div class="project-link-row">
+            <span>App store soon</span>
+          </div>
+        </div>
+
       </div>
-      <p class="project-name">Resonance</p>
-      <p class="project-desc">A local service demand aggregation platform. Crystallises latent neighbourhood demand so viable local services can get off the ground.</p>
-      <span class="project-badge">Community · Platform</span>
-      <a class="project-link" href="https://joinresonance.co.uk/" target="_blank" rel="noopener">
-        ↗ Visit
-      </a>
     </div>
 
-    <div class="project-card">
-      <div class="project-card-top">
-        <div class="project-icon" style="background:#EEEDFE;">🧗</div>
-        <span class="project-year">2026</span>
-      </div>
-      <p class="project-name">BoulderBuddy</p>
-      <p class="project-desc">AI bouldering form analysis. Uses video to assess technique, with comparison against reference climbers. iOS and Android in testing.</p>
-      <span class="project-badge">Mobile · In testing</span>
-      <span class="project-link disabled">
-        📱 App store soon
-      </span>
-    </div>
-
-    <div class="project-card">
-      <div class="project-card-top">
-        <div class="project-icon" style="background:#FBEAF0;">🤝</div>
-        <span class="project-year">2026</span>
-      </div>
-      <p class="project-name">Kin</p>
-      <p class="project-desc">An asynchronous family moments platform for staying connected across generations, with gentle health monitoring features for grandparents. iOS and Android in development.</p>
-      <span class="project-badge">Mobile · In development</span>
-      <span class="project-link disabled">
-        📱 App store soon
-      </span>
-    </div>
+    <footer class="reveal">
+      <p class="footer-note">
+        These projects reflect my ability to work with AI tools and advise on AI deployment and strategy — not a pivot into startups.
+      </p>
+      <span class="footer-name">Nick Zhang &nbsp;·&nbsp; London</span>
+    </footer>
 
   </div>
 
-  <div class="note-strip">
-    These projects are presented as evidence of applied AI capability: designing systems, prompting intelligently, and deploying working tools. They are not startup pitches.
-  </div>
+  <script>
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((e, i) => {
+        if (e.isIntersecting) {
+          setTimeout(() => e.target.classList.add('visible'), i * 80);
+        }
+      });
+    }, { threshold: 0.1 });
 
-</div>
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  </script>
 
 </body>
 </html>
